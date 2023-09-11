@@ -1,13 +1,12 @@
 import cityRepository from '../repositories/city.repository.js';
-import conflict from '../errors/conflict.error.js';
+import duplicate from '../errors/duplicate.error.js';
 
 async function create(name) {
-  const existingCity = await cityRepository.validateExisting(name);
-  if (existingCity) throw conflict(name);
+  const existingCity = await cityRepository.validateByName(name);
+  if (existingCity) throw duplicate(name);
 
   return cityRepository.create(name);
 }
 
 const cityService = { create };
 export default cityService;
-

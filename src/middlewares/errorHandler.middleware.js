@@ -1,8 +1,16 @@
 import httpStatus from 'http-status';
 
 export default function errorHandler(error, req, res, next) {
-  if (error.type === 'conflict') {
+  if (error.type === 'duplicate') {
     return res.status(httpStatus.CONFLICT).send(error.message);
+  }
+
+  if (error.type === 'incompatible') {
+    return res.status(httpStatus.CONFLICT).send(error.message);
+  }
+
+  if (error.type === 'notFound') {
+    return res.status(httpStatus.NOT_FOUND).send(error.message);
   }
 
   if (error.type === 'unprocessableEntity') {
