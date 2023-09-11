@@ -1,5 +1,5 @@
-import coreJoi from "joi";
-import joiDate from "@joi/date";
+import coreJoi from 'joi';
+import joiDate from '@joi/date';
 
 const joi = coreJoi.extend(joiDate);
 
