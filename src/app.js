@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import 'express-async-errors';
+import indexRouter from './routes/index.route.js';
 import errorHandler from './middlewares/errorHandler.middleware.js';
 
 dotenv.config();
@@ -10,6 +11,7 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(indexRouter);
 app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
