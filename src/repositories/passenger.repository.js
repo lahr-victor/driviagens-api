@@ -12,5 +12,16 @@ async function create(firstName, lastName) {
   return rows[0];
 }
 
-const passengerRepository = { create };
+async function validateById(id) {
+  const { rows } = await db.query(
+    `
+    SELECT EXISTS (SELECT * FROM passengers WHERE id = $1);
+    `,
+    [id],
+  );
+
+  return rows[0].exists;
+}
+
+const passengerRepository = { create, validateById };
 export default passengerRepository;
