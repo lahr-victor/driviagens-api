@@ -1,16 +1,16 @@
 import cityRepository from '../repositories/city.repository.js';
 import flightRepository from '../repositories/flight.repository.js';
-import notFound from '../errors/notFound.error.js';
-import incompatible from '../errors/incompatible.error.js';
+import notFoundError from '../errors/notFound.error.js';
+import incompatibleError from '../errors/incompatible.error.js';
 
 async function create(origin, destination, date) {
   const existingOrigin = await cityRepository.validateById(origin);
-  if (!existingOrigin) throw notFound('Origin');
+  if (!existingOrigin) throw notFoundError('Origin');
 
   const existingDestination = await cityRepository.validateById(destination);
-  if (!existingDestination) throw notFound('Destination');
+  if (!existingDestination) throw notFoundError('Destination');
 
-  if (origin === destination) throw incompatible('Flights');
+  if (origin === destination) throw incompatibleError('Flights');
 
   return flightRepository.create(origin, destination, date);
 }

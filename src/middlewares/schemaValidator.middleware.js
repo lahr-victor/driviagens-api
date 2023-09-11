@@ -1,4 +1,4 @@
-import unprocessableEntity from '../errors/unprocessableEntity.error.js';
+import unprocessableError from '../errors/unprocessable.error.js';
 
 export default function schemaValidator(schema) {
   return (req, res, next) => {
@@ -6,7 +6,7 @@ export default function schemaValidator(schema) {
 
     if (validation.error) {
       const errors = validation.error.details.map((detail) => detail.message);
-      throw unprocessableEntity(errors);
+      throw unprocessableError(errors);
     }
 
     return next();

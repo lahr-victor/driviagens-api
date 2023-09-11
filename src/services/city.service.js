@@ -1,9 +1,9 @@
 import cityRepository from '../repositories/city.repository.js';
-import duplicate from '../errors/duplicate.error.js';
+import duplicateError from '../errors/duplicate.error.js';
 
 async function create(name) {
   const existingCity = await cityRepository.validateByName(name);
-  if (existingCity) throw duplicate(name);
+  if (existingCity) throw duplicateError(name);
 
   return cityRepository.create(name);
 }
