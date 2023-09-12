@@ -7,8 +7,14 @@ const flightRouter = Router();
 
 flightRouter.post(
   '/flights',
-  schemaValidator(flightSchema.create),
+  schemaValidator.body(flightSchema.create),
   flightController.create,
+);
+
+flightRouter.get(
+  '/flights',
+  schemaValidator.query(flightSchema.readAll),
+  flightController.readAll,
 );
 
 export default flightRouter;

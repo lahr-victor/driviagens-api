@@ -7,7 +7,7 @@ const travelRouter = Router();
 
 travelRouter.post(
   '/travels',
-  schemaValidator(travelSchema.create),
+  schemaValidator.body(travelSchema.create),
   travelController.create,
 );
 

@@ -7,7 +7,7 @@ const cityRouter = Router();
 
 cityRouter.post(
   '/cities',
-  schemaValidator(citySchema.create),
+  schemaValidator.body(citySchema.create),
   cityController.create,
 );
 

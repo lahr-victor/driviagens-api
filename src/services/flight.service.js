@@ -4,6 +4,8 @@ import cityRepository from '../repositories/city.repository.js';
 import flightRepository from '../repositories/flight.repository.js';
 import notFoundError from '../errors/notFound.error.js';
 import incompatibleError from '../errors/incompatible.error.js';
+import incompleteError from '../errors/incomplete.error.js';
+import invalidError from '../errors/invalid.error.js';
 
 dayjs.extend(customParseFormat);
 
@@ -21,5 +23,31 @@ async function create(origin, destination, date) {
   return flightRepository.create(origin, destination, formattedDate);
 }
 
-const flightService = { create };
+async function readAll(origin, destination, smallerDate, biggerDate) {
+  if ((biggerDate && !smallerDate) || (!biggerDate && smallerDate)) {
+    throw incompleteError('Date interval');
+  }
+
+  let formattedBiggerDate;
+  let formattedSmallerDate;
+
+  if (biggerDate && smallerDate) {
+    formattedBiggerDate = dayjs(biggerDate, 'DD-MM-YYYY').toISOString();
+    formattedSmallerDate = dayjs(smallerDate, 'DD-MM-YYYY').toISOString();
+
+    if (formattedSmallerDate > formattedBiggerDate) {
+      throw invalidError('Date interval');
+    }
+  }
+
+  const flights = await flightRepository.readAll(
+    origin,
+    destination,
+    formattedSmallerDate,
+    formattedBiggerDate,
+  );
+  return flights;
+}
+
+const flightService = { create, readAll };
 export default flightService;

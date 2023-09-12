@@ -7,7 +7,7 @@ const passengerRouter = Router();
 
 passengerRouter.post(
   '/passengers',
-  schemaValidator(passengerSchema.create),
+  schemaValidator.body(passengerSchema.create),
   passengerController.create,
 );
 

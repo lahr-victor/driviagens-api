@@ -21,5 +21,31 @@ const create = joi.object({
     .required(),
 });
 
-const flightSchema = { create };
+const readAll = joi.object({
+  origin: joi
+    .string()
+    .trim()
+    .min(2)
+    .max(50)
+    .optional(),
+
+  destination: joi
+    .string()
+    .trim()
+    .min(2)
+    .max(50)
+    .optional(),
+
+  'smaller-date': joi
+    .date()
+    .format(['DD-MM-YYYY', 'DD/MM/YYYY'])
+    .optional(),
+
+  'bigger-date': joi
+    .date()
+    .format(['DD-MM-YYYY', 'DD/MM/YYYY'])
+    .optional(),
+});
+
+const flightSchema = { create, readAll };
 export default flightSchema;
