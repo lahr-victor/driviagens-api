@@ -3,8 +3,13 @@ import db from '../database/database.connection.js';
 async function create(origin, destination, date) {
   const { rows } = await db.query(
     `
-    INSERT INTO flights (origin, destination, date)
-    VALUES ($1, $2, $3);
+    INSERT INTO
+      flights (origin, destination, date) 
+    VALUES
+      (
+        $1, $2, $3
+      )
+    ;
     `,
     [origin, destination, date],
   );
@@ -15,7 +20,17 @@ async function create(origin, destination, date) {
 async function validateById(id) {
   const { rows } = await db.query(
     `
-    SELECT EXISTS (SELECT * FROM flights WHERE id = $1);
+    SELECT
+      EXISTS 
+      (
+        SELECT
+          * 
+        FROM
+          flights 
+        WHERE
+          id = $1
+      )
+    ;
     `,
     [id],
   );

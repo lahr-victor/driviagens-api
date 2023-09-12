@@ -3,8 +3,13 @@ import db from '../database/database.connection.js';
 async function create(name) {
   const { rows } = await db.query(
     `
-    INSERT INTO cities (name)
-    VALUES ($1);
+    INSERT INTO
+      cities (name) 
+    VALUES
+      (
+        $1
+      )
+    ;
     `,
     [name],
   );
@@ -15,7 +20,17 @@ async function create(name) {
 async function validateById(id) {
   const { rows } = await db.query(
     `
-    SELECT EXISTS (SELECT * FROM cities WHERE id = $1);
+    SELECT
+      EXISTS 
+      (
+        SELECT
+          * 
+        FROM
+          cities 
+        WHERE
+          id = $1
+      )
+    ;
     `,
     [id],
   );
@@ -26,7 +41,17 @@ async function validateById(id) {
 async function validateByName(name) {
   const { rows } = await db.query(
     `
-    SELECT EXISTS (SELECT * FROM cities WHERE name = $1);
+    SELECT
+      EXISTS 
+      (
+        SELECT
+          * 
+        FROM
+          cities 
+        WHERE
+          name = $1
+      )
+    ;
     `,
     [name],
   );

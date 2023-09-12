@@ -24,19 +24,23 @@ async function readTravels(name) {
       JOIN
         travels 
         ON travels."passengerId" = passengers.id
-    WHERE 1=1
+    WHERE 
+      1=1
   `;
 
   if (name) {
     values.push(`%${name}%`);
-    query += `AND CONCAT(passengers."firstName", ' ', passengers."lastName") ILIKE $1`;
+    query += `
+      AND CONCAT(passengers."firstName", ' ', passengers."lastName") ILIKE $1
+    `;
   }
 
   query += `
     GROUP BY
       passengers.id 
-    ORDER BY
-      travels DESC;
+      ORDER BY
+        travels DESC
+    ;
   `;
 
   const { rows } = await db.query(
@@ -50,7 +54,17 @@ async function readTravels(name) {
 async function validateById(id) {
   const { rows } = await db.query(
     `
-    SELECT EXISTS (SELECT * FROM passengers WHERE id = $1);
+    SELECT
+      EXISTS 
+      (
+        SELECT
+          * 
+        FROM
+          passengers 
+        WHERE
+          id = $1
+      )
+    ;
     `,
     [id],
   );
