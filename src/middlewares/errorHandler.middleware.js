@@ -13,6 +13,10 @@ export default function errorHandler(error, req, res, next) {
     return res.status(httpStatus.NOT_FOUND).send(error.message);
   }
 
+  if (error.type === 'overflow') {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error.message);
+  }
+
   if (error.type === 'unprocessable') {
     return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
   }

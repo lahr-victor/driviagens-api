@@ -8,5 +8,12 @@ async function create(req, res) {
   res.sendStatus(httpStatus.CREATED);
 }
 
-const passengerController = { create };
+async function readTravels(req, res) {
+  const { name } = req.query;
+  const travels = await passengerService.readTravels(name);
+
+  res.send(travels).status(httpStatus.OK);
+}
+
+const passengerController = { create, readTravels };
 export default passengerController;
